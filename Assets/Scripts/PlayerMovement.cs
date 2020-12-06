@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerMovement : MonoBehaviour
@@ -63,5 +64,17 @@ public class PlayerMovement : MonoBehaviour
     private void SlowMotion()
     {
         Time.timeScale = 0.3f;
+        StartCoroutine(SlowMotionTimer());
+    }
+
+    private IEnumerator SlowMotionTimer()
+    {
+        while (Time.timeScale < 1f)
+        {
+            Time.timeScale += 0.1f;
+            Time.fixedDeltaTime = 0.02F * Time.timeScale;
+
+            yield return new WaitForSeconds(0.2f);
+        }
     }
 }
