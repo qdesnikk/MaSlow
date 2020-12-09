@@ -5,13 +5,15 @@ using System.Linq;
 
 public class LevelGenerator : MonoBehaviour
 {
-    [SerializeField] GridObject[] _templates;
+    [SerializeField] GridObject[] _bottomTemplates;
+    [SerializeField] GridObject[] _topTemplates;
+    [SerializeField] GridObject[] _obstacleTemplates;
     [SerializeField] private Player _player;
     [SerializeField] private float _viewDistance;
     [SerializeField] private Vector2 _cellSize;
 
     private HashSet<Vector2Int> _collisionsMatrix = new HashSet<Vector2Int>();
-    private List<GridObject> _groundTemplates = new List<GridObject>();
+    [SerializeField] int countBetweenObstackles = 0;
 
     private void Update()
     {
@@ -25,8 +27,10 @@ public class LevelGenerator : MonoBehaviour
 
         for (int x = -cellCountOnAxis; x < cellCountOnAxis; x++)
         {
-            TryCreateOnLayer(GridLayer.Ground, fillAreaCenter + new Vector2Int(x, 0));
-            TryCreateOnLayer(GridLayer.FirstFloor, fillAreaCenter + new Vector2Int(x, 0));
+            TryCreateOnLayer(GridLayer.KitchenFirstFloor, fillAreaCenter + new Vector2Int(x, 0));
+            TryCreateOnLayer(GridLayer.KitchenSecondFloor, fillAreaCenter + new Vector2Int(x, 0));
+            TryCreateOnLayer(GridLayer.ObstackleFirstFloor, fillAreaCenter + new Vector2Int(x, 0));
+            TryCreateOnLayer(GridLayer.ObstackleSecondFloor, fillAreaCenter + new Vector2Int(x, 0));
         }
     }
 
@@ -40,10 +44,25 @@ public class LevelGenerator : MonoBehaviour
         else
             _collisionsMatrix.Add(gridPosition);
 
-        if(layer == GridLayer.Ground)
-            template = GetRandomGroundTemplate();
+        if (layer == GridLayer.KitchenFirstFloor)
+        {
+            template = GetRandomKitchenFrstFloorTemplate();
+            countBetweenObstackles++;
+        }
+        else if (layer == GridLayer.KitchenSecondFloor)
+        {
+            template = GetRandomKitchenSecondFloorTemplate();
+        }
         else
-            template = GetRandomObstacleTemplate(layer);
+        {
+            return;
+        }
+
+        if (countBetweenObstackles >= 5)
+        {
+            CreateRandomObstackle(gridPosition);
+            countBetweenObstackles = 0;
+        }
 
         if (template == null)
             return;
@@ -53,31 +72,35 @@ public class LevelGenerator : MonoBehaviour
         Instantiate(template, position, Quaternion.identity, transform);
     }
 
-    private GridObject GetRandomObstacleTemplate(GridLayer layer)
+    private void CreateRandomObstackle(Vector2Int gridPosition)
     {
-        var variants = _templates.Where(template => template.Layer == layer);
+        var template = GetRandomObstacleTemplate();
 
-        foreach (var template in variants)
-        {
-            if (template.Chance > Random.Range(0, 100))
-            {
-                return template;
-            }
-        }
+        gridPosition.y = (int)template.Layer;
 
-        return null;
+        var position = GridToWorldPosition(gridPosition);
+
+        Instantiate(template, position, Quaternion.identity, transform);
     }
 
-    private GridObject GetRandomGroundTemplate()
+    private GridObject GetRandomObstacleTemplate()
     {
-        var variants = _templates.Where(template => template.Layer == GridLayer.Ground);
+        return _obstacleTemplates[Random.Range(0, _obstacleTemplates.Length)];
+    }
 
-        foreach (var template in variants)
-        {
-            _groundTemplates.Add(template);
-        }
+    private GridObject GetRandomKitchenFrstFloorTemplate()
+    {
+        return _bottomTemplates[Random.Range(0, _bottomTemplates.Length)];
+    }
 
-        return _groundTemplates[Random.Range(0, _groundTemplates.Count)];
+    private GridObject GetRandomKitchenSecondFloorTemplate()
+    {
+        int chance = Random.Range(0, 100);
+
+        if (chance >= 80)
+            return _topTemplates[Random.Range(0, _topTemplates.Length)];
+        else
+            return null;
     }
 
     private Vector2 GridToWorldPosition(Vector2Int gridPosition)

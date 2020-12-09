@@ -1,6 +1,7 @@
 ﻿enum GridLayer
 {
-    Ground = -1,
-    FirstFloor = 0,
-    SecondFloor = 2
+    KitchenFirstFloor = 0,
+    KitchenSecondFloor = 120,
+    ObstackleFirstFloor = 1,
+    ObstackleSecondFloor = 50
 }
