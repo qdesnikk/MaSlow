@@ -1,9 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using DG.Tweening;
 
 [RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(Animator))]
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private float _moveSpeed;
@@ -12,10 +14,12 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Transform _groundCheck;
     [SerializeField] private float _checkRadius;
     [SerializeField] private LayerMask _whatIsGround;
+    [SerializeField] private Image _whiteScreen;
 
     private PlayerInput _input;
     private Rigidbody2D _rigidBody;
     private bool _isGrounded;
+    private Animator _animator;
 
 
     private void Awake()
@@ -28,6 +32,7 @@ public class PlayerMovement : MonoBehaviour
         _input.Player.SlowMotion.performed += ctx => SlowMotion();
 
         _rigidBody = GetComponent<Rigidbody2D>();
+        _animator = GetComponent<Animator>();
     }
 
     private void Update()
@@ -49,6 +54,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (_isGrounded)
         {
+            _animator.Play("Jump");
             _rigidBody.AddForce(Vector2.up * _jumpForce, ForceMode2D.Impulse);
         }
     }
@@ -57,18 +63,24 @@ public class PlayerMovement : MonoBehaviour
     {
         if (_isGrounded)
         {
+            _animator.Play("Slide");
             _rigidBody.AddForce(Vector2.right * _slideForce, ForceMode2D.Impulse);
         }
     }
 
     private void SlowMotion()
     {
-        Time.timeScale = 0.3f;
+        //_whiteScreen.gameObject.SetActive(true);
+        _whiteScreen.DOFade(0.5f, 0.1f);
+        _whiteScreen.DOFade(0f, 1f);
+
         StartCoroutine(SlowMotionTimer());
     }
 
     private IEnumerator SlowMotionTimer()
     {
+        Time.timeScale = 0.4f;
+
         while (Time.timeScale < 1f)
         {
             Time.timeScale += 0.1f;
@@ -76,5 +88,6 @@ public class PlayerMovement : MonoBehaviour
 
             yield return new WaitForSeconds(0.2f);
         }
+        //_whiteScreen.gameObject.SetActive(false);
     }
 }
