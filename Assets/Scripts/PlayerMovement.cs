@@ -15,6 +15,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float _checkRadius;
     [SerializeField] private LayerMask _whatIsGround;
     [SerializeField] private Image _whiteScreen;
+    [SerializeField] private ParticleSystem _slideParticle;
 
     private PlayerInput _input;
     private Rigidbody2D _rigidBody;
@@ -30,6 +31,8 @@ public class PlayerMovement : MonoBehaviour
         _input.Player.Jump.performed += ctx => Jump();
         _input.Player.Slide.performed += ctx => Slide();
         _input.Player.SlowMotion.performed += ctx => SlowMotion();
+
+        _slideParticle.Stop();
 
         _rigidBody = GetComponent<Rigidbody2D>();
         _animator = GetComponent<Animator>();
@@ -63,6 +66,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (_isGrounded)
         {
+            _slideParticle.Play();
             _animator.Play("Slide");
             _rigidBody.AddForce(Vector2.right * _slideForce, ForceMode2D.Impulse);
         }
@@ -70,8 +74,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void SlowMotion()
     {
-        //_whiteScreen.gameObject.SetActive(true);
-        _whiteScreen.DOFade(0.5f, 0.1f);
+        _whiteScreen.DOFade(0.6f, 0.1f);
         _whiteScreen.DOFade(0f, 1f);
 
         StartCoroutine(SlowMotionTimer());
@@ -88,6 +91,5 @@ public class PlayerMovement : MonoBehaviour
 
             yield return new WaitForSeconds(0.2f);
         }
-        //_whiteScreen.gameObject.SetActive(false);
     }
 }

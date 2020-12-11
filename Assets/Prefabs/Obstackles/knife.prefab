@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5536480782966028909}
   - component: {fileID: 5536480782966028910}
   - component: {fileID: 5536480782966028911}
+  - component: {fileID: -540952057431281878}
   m_Layer: 0
   m_Name: knife
   m_TagString: Untagged
@@ -96,3 +97,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _layer: 50
   _chance: 1
+--- !u!114 &-540952057431281878
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5536480782966028896}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9800fd7e23d2603449bf02a6ef1d397f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
