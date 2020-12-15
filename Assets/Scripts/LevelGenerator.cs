@@ -2,22 +2,40 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class LevelGenerator : MonoBehaviour
 {
     [SerializeField] GridObject[] _bottomTemplates;
     [SerializeField] GridObject[] _topTemplates;
     [SerializeField] GridObject[] _obstacleTemplates;
+    [SerializeField] GridObject _startTemplate;
+    [SerializeField] GridObject _finishTemplate;
     [SerializeField] private Player _player;
+    [SerializeField] private Slider _progressBar;
     [SerializeField] private float _viewDistance;
     [SerializeField] private Vector2 _cellSize;
 
     private HashSet<Vector2Int> _collisionsMatrix = new HashSet<Vector2Int>();
-    [SerializeField] int countBetweenObstackles = 0;
+    private bool _isStartCreated = false;
+    private bool _isFinishCreated = false;
+    [SerializeField] private int _totalCountBetweenObstackles = 5;
+    [SerializeField] private int _currentCountBetweenObstackles = 0;
+    [SerializeField] private int _countObstacklesInLevel = 5;
+    [SerializeField] private int _levelLength;
+
+    private void Awake()
+    {
+        _levelLength = _totalCountBetweenObstackles * _countObstacklesInLevel;
+        _currentCountBetweenObstackles = _totalCountBetweenObstackles;
+        _progressBar.maxValue = _levelLength - (int)(_viewDistance / _cellSize.x * 2);
+    }
 
     private void Update()
     {
         FillDistance(_player.transform.position, _viewDistance);
+        _progressBar.value = _levelLength;
     }
 
     private void FillDistance(Vector2 center, float viewDistance)
@@ -27,14 +45,29 @@ public class LevelGenerator : MonoBehaviour
 
         for (int x = -cellCountOnAxis; x < cellCountOnAxis; x++)
         {
-            TryCreateOnLayer(GridLayer.KitchenFirstFloor, fillAreaCenter + new Vector2Int(x, 0));
-            TryCreateOnLayer(GridLayer.KitchenSecondFloor, fillAreaCenter + new Vector2Int(x, 0));
-            TryCreateOnLayer(GridLayer.ObstackleFirstFloor, fillAreaCenter + new Vector2Int(x, 0));
-            TryCreateOnLayer(GridLayer.ObstackleSecondFloor, fillAreaCenter + new Vector2Int(x, 0));
+            if (!_isStartCreated)
+            {
+                CreateStart(fillAreaCenter + new Vector2Int(0, 0));
+                _isStartCreated = true;
+            }
+
+            TryCreateKitchen(GridLayer.KitchenFirstFloor, fillAreaCenter + new Vector2Int(x, 0));
+            TryCreateKitchen(GridLayer.KitchenSecondFloor, fillAreaCenter + new Vector2Int(x, 0));
+
+            if (_levelLength > 0)
+            {
+                TryCreateObstackle(fillAreaCenter + new Vector2Int(x, 0));
+                TryCreateObstackle(fillAreaCenter + new Vector2Int(x, 0));
+            }
+            else if (!_isFinishCreated)
+            {
+                CreateFinish(fillAreaCenter + new Vector2Int(cellCountOnAxis, 0));
+                _isFinishCreated = true;
+            }
         }
     }
 
-    private void TryCreateOnLayer(GridLayer layer, Vector2Int gridPosition)
+    private void TryCreateKitchen(GridLayer layer, Vector2Int gridPosition)
     {
         GridObject template;
         gridPosition.y = (int)layer;
@@ -47,7 +80,8 @@ public class LevelGenerator : MonoBehaviour
         if (layer == GridLayer.KitchenFirstFloor)
         {
             template = GetRandomKitchenFrstFloorTemplate();
-            countBetweenObstackles++;
+            _currentCountBetweenObstackles--;
+            _levelLength--;
         }
         else if (layer == GridLayer.KitchenSecondFloor)
         {
@@ -58,29 +92,48 @@ public class LevelGenerator : MonoBehaviour
             return;
         }
 
-        if (countBetweenObstackles >= 5)
-        {
-            CreateRandomObstackle(gridPosition);
-            countBetweenObstackles = 0;
-        }
-
         if (template == null)
             return;
 
         var position = GridToWorldPosition(gridPosition);
-
         Instantiate(template, position, Quaternion.identity, transform);
     }
 
-    private void CreateRandomObstackle(Vector2Int gridPosition)
+    private void TryCreateObstackle(Vector2Int gridPosition)
     {
-        var template = GetRandomObstacleTemplate();
+        GridObject obstackleTemplate;
 
-        gridPosition.y = (int)template.Layer;
+        if ( _currentCountBetweenObstackles <= 0)
+        {
+            obstackleTemplate = GetRandomObstacleTemplate();
+            gridPosition.y = (int)obstackleTemplate.Layer;
+            _currentCountBetweenObstackles = _totalCountBetweenObstackles;
+            _countObstacklesInLevel--;
+        }
+        else
+        {
+            return;
+        }
+
+        if (obstackleTemplate == null)
+            return;
 
         var position = GridToWorldPosition(gridPosition);
+        Instantiate(obstackleTemplate, position, Quaternion.identity, transform);
+    }
 
-        Instantiate(template, position, Quaternion.identity, transform);
+    private void CreateFinish(Vector2Int gridPosition)
+    {
+        gridPosition.y = (int)_finishTemplate.Layer;
+        var position = GridToWorldPosition(gridPosition);
+        Instantiate(_finishTemplate, position, Quaternion.identity, transform);
+    }
+
+    private void CreateStart(Vector2Int gridPosition)
+    {
+        gridPosition.y = (int)_startTemplate.Layer;
+        var position = GridToWorldPosition(gridPosition);
+        Instantiate(_startTemplate, position, Quaternion.identity, transform);
     }
 
     private GridObject GetRandomObstacleTemplate()

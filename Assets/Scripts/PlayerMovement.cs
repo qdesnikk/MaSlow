@@ -16,11 +16,14 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private LayerMask _whatIsGround;
     [SerializeField] private Image _whiteScreen;
     [SerializeField] private ParticleSystem _slideParticle;
+    [SerializeField] private Text _countDownText;
 
     private PlayerInput _input;
     private Rigidbody2D _rigidBody;
     private bool _isGrounded;
     private Animator _animator;
+    private int _countDownInSeconds = 4;
+    private float _currentMoveSpeed;
 
 
     private void Awake()
@@ -36,10 +39,20 @@ public class PlayerMovement : MonoBehaviour
 
         _rigidBody = GetComponent<Rigidbody2D>();
         _animator = GetComponent<Animator>();
+
+        _currentMoveSpeed = 0;
+        _countDownText.gameObject.SetActive(false);
+        StartCoroutine(StartCountdown());
     }
 
     private void Update()
     {
+        if (_countDownInSeconds == 0)
+        {
+            _currentMoveSpeed = _moveSpeed;
+            _countDownText.gameObject.SetActive(false);
+        }
+
         Move();
     }
 
@@ -50,7 +63,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Move()
     {
-        _rigidBody.transform.Translate(Vector3.right * _moveSpeed * Time.deltaTime);
+        _rigidBody.transform.Translate(Vector3.right * _currentMoveSpeed * Time.deltaTime);
     }
 
     private void Jump()
@@ -90,6 +103,19 @@ public class PlayerMovement : MonoBehaviour
             Time.fixedDeltaTime = 0.02F * Time.timeScale;
 
             yield return new WaitForSeconds(0.2f);
+        }
+    }
+
+    private IEnumerator StartCountdown()
+    {
+        
+        while (_countDownInSeconds > 0)
+        {
+            _countDownText.gameObject.SetActive(true);
+            _countDownInSeconds--;
+            _countDownText.text = _countDownInSeconds.ToString();
+
+            yield return new WaitForSeconds(1f);
         }
     }
 }
