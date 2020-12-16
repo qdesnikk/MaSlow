@@ -27,15 +27,17 @@ public class LevelGenerator : MonoBehaviour
 
     private void Awake()
     {
-        _levelLength = _totalCountBetweenObstackles * _countObstacklesInLevel;
-        _currentCountBetweenObstackles = _totalCountBetweenObstackles;
+        _currentCountBetweenObstackles = _totalCountBetweenObstackles * 2;
+        _levelLength = _totalCountBetweenObstackles * _countObstacklesInLevel + _currentCountBetweenObstackles;
+
         _progressBar.maxValue = _levelLength - (int)(_viewDistance / _cellSize.x * 2);
+        _progressBar.value = _progressBar.maxValue;
     }
 
     private void Update()
     {
         FillDistance(_player.transform.position, _viewDistance);
-        _progressBar.value = _levelLength;
+        _progressBar.value = Mathf.Lerp(_progressBar.value, _levelLength, 0.5f * Time.deltaTime);
     }
 
     private void FillDistance(Vector2 center, float viewDistance)
@@ -47,7 +49,7 @@ public class LevelGenerator : MonoBehaviour
         {
             if (!_isStartCreated)
             {
-                CreateStart(fillAreaCenter + new Vector2Int(0, 0));
+                CreateFlag(_startTemplate, fillAreaCenter + new Vector2Int(0, 0));
                 _isStartCreated = true;
             }
 
@@ -61,7 +63,7 @@ public class LevelGenerator : MonoBehaviour
             }
             else if (!_isFinishCreated)
             {
-                CreateFinish(fillAreaCenter + new Vector2Int(cellCountOnAxis, 0));
+                CreateFlag(_finishTemplate, fillAreaCenter + new Vector2Int(cellCountOnAxis, 0));
                 _isFinishCreated = true;
             }
         }
@@ -122,18 +124,11 @@ public class LevelGenerator : MonoBehaviour
         Instantiate(obstackleTemplate, position, Quaternion.identity, transform);
     }
 
-    private void CreateFinish(Vector2Int gridPosition)
+    private void CreateFlag(GridObject flagTemplate, Vector2Int gridPosition)
     {
-        gridPosition.y = (int)_finishTemplate.Layer;
+        gridPosition.y = (int)flagTemplate.Layer;
         var position = GridToWorldPosition(gridPosition);
-        Instantiate(_finishTemplate, position, Quaternion.identity, transform);
-    }
-
-    private void CreateStart(Vector2Int gridPosition)
-    {
-        gridPosition.y = (int)_startTemplate.Layer;
-        var position = GridToWorldPosition(gridPosition);
-        Instantiate(_startTemplate, position, Quaternion.identity, transform);
+        Instantiate(flagTemplate, position, Quaternion.identity, transform);
     }
 
     private GridObject GetRandomObstacleTemplate()

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class PauseMenu : MonoBehaviour
+public class PauseWindow : MonoBehaviour
 {
     public void OpenWindow(Window window)
     {
@@ -15,6 +15,13 @@ public class PauseMenu : MonoBehaviour
     public void ResumeGame(Window window)
     {
         window.gameObject.SetActive(false);
+        Time.timeScale = 1;
+    }
+
+    public void RestartLevel(Window window)
+    {
+        window.gameObject.SetActive(false);
+        SceneManager.LoadScene("Game", LoadSceneMode.Single);
         Time.timeScale = 1;
     }
 

@@ -15,37 +15,42 @@ public class Player : MonoBehaviour
     private Transform _transform;
     private Animator _animator;
     private int _coinsCount = 0;
-    private bool isAlive = true;
 
-    public event UnityAction<Player> PlayerIsDead;
-    public event UnityAction LevelIsFinished;
+    public event UnityAction IsDead;
+    public event UnityAction IsFinished;
+
+    private void OnEnable()
+    {
+        this.IsFinished += FinishTheLevel;
+    }
+
+    private void OnDisable()
+    {
+        this.IsFinished -= FinishTheLevel;
+    }
 
     private void Awake()
     {
+        Time.timeScale = 1;
         _transform = GetComponent<Transform>();
         _animator = GetComponent<Animator>();
 
         _coinsText.text = _coinsCount.ToString();
     }
 
-    private void Update()
-    {
-        if (!isAlive)
-            PlayerIsDead?.Invoke(this);
-    }
-
     private void FinishTheLevel()
     {
-        //_transform.DORotate(new Vector3(0, 0, 40), 1);
-        LevelIsFinished?.Invoke();
-        Debug.Log("finish level");
+        _transform.DORotate(new Vector3(0, 0, 180), 1);
+        _transform.DOMove(_transform.position + new Vector3(3,3,0), 2);
+
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.TryGetComponent(out Finish finish))
         {
-            FinishTheLevel();
+            IsFinished?.Invoke();
+            Debug.Log("finish level");
         }
         else if (collision.gameObject.TryGetComponent(out Coin coin))
         {
@@ -56,7 +61,7 @@ public class Player : MonoBehaviour
         else if (collision.gameObject.TryGetComponent(out Obstackle obstackle))
         {
             //_animator.Play("Death");
-            isAlive = false;
+            //IsDead?.Invoke();
             Debug.Log(obstackle);
         }
     }
