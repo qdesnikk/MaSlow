@@ -7,6 +7,7 @@ using UnityEngine.Events;
 
 [RequireComponent(typeof(Transform))]
 [RequireComponent(typeof(Animator))]
+[RequireComponent(typeof(Rigidbody2D))]
 public class Player : MonoBehaviour
 {
     [SerializeField] private Text _coinsText;
@@ -14,6 +15,7 @@ public class Player : MonoBehaviour
 
     private Transform _transform;
     private Animator _animator;
+    private Rigidbody2D _rigidBody;
     private int _coinsCount = 0;
 
     public event UnityAction IsDead;
@@ -34,14 +36,16 @@ public class Player : MonoBehaviour
         Time.timeScale = 1;
         _transform = GetComponent<Transform>();
         _animator = GetComponent<Animator>();
+        _rigidBody = GetComponent<Rigidbody2D>();
 
         _coinsText.text = _coinsCount.ToString();
     }
 
     private void FinishTheLevel()
     {
-        _transform.DORotate(new Vector3(0, 0, 180), 1);
-        _transform.DOMove(_transform.position + new Vector3(3,3,0), 2);
+        float jumpForce = 15;
+        _rigidBody.AddForce(new Vector2(1f, 0.7f) * jumpForce, ForceMode2D.Impulse);
+        _transform.DORotate(new Vector3(0, 0, 360), 1f, RotateMode.FastBeyond360);
 
     }
 

@@ -22,8 +22,9 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D _rigidBody;
     private bool _isGrounded;
     private Animator _animator;
-    private int _countDownInSeconds = 4;
+    private int _startCountdown = 4;
     private float _currentMoveSpeed;
+    private float _slideCountdown = 0;
 
 
     private void Awake()
@@ -35,19 +36,18 @@ public class PlayerMovement : MonoBehaviour
         _input.Player.Slide.performed += ctx => Slide();
         _input.Player.SlowMotion.performed += ctx => SlowMotion();
 
-        _slideParticle.Stop();
-
         _rigidBody = GetComponent<Rigidbody2D>();
         _animator = GetComponent<Animator>();
 
         _currentMoveSpeed = 0;
+
         _countDownText.gameObject.SetActive(false);
-        StartCoroutine(StartCountdown());
+        StartCoroutine(StartCountdownTimer());
     }
 
     private void Update()
     {
-        if (_countDownInSeconds == 0)
+        if (_startCountdown == 0)
         {
             _currentMoveSpeed = _moveSpeed;
             _countDownText.gameObject.SetActive(false);
@@ -77,11 +77,13 @@ public class PlayerMovement : MonoBehaviour
 
     private void Slide()
     {
-        if (_isGrounded)
+        if (_isGrounded && _slideCountdown <= 0)
         {
             _slideParticle.Play();
             _animator.Play("Slide");
             _rigidBody.AddForce(Vector2.right * _slideForce, ForceMode2D.Impulse);
+
+            StartCoroutine(SlideCountdownTimer());
         }
     }
 
@@ -106,14 +108,26 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private IEnumerator StartCountdown()
+    private IEnumerator SlideCountdownTimer()
+    {
+        _slideCountdown = 5;
+
+        while (_slideCountdown > 0)
+        {
+            _slideCountdown--;
+
+            yield return new WaitForSeconds(1f);
+        }
+    }
+
+    private IEnumerator StartCountdownTimer()
     {
         
-        while (_countDownInSeconds > 0)
+        while (_startCountdown > 0)
         {
             _countDownText.gameObject.SetActive(true);
-            _countDownInSeconds--;
-            _countDownText.text = _countDownInSeconds.ToString();
+            _startCountdown--;
+            _countDownText.text = _startCountdown.ToString();
 
             yield return new WaitForSeconds(1f);
         }
