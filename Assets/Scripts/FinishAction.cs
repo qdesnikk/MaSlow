@@ -18,7 +18,6 @@ public class FinishAction : MonoBehaviour
         _player.IsFinished -= ShowCongratulations;
     }
 
-
     private void ShowCongratulations()
     {
         _finishParticle.Play();

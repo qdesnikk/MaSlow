@@ -60,7 +60,7 @@ public class Player : MonoBehaviour
         {
             _coinsCount++;
             _coinsText.text = _coinsCount.ToString();
-            Destroy(coin.gameObject);
+            coin.Destroy();
         }
         else if (collision.gameObject.TryGetComponent(out Obstackle obstackle))
         {

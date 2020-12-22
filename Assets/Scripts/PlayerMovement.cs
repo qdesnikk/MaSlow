@@ -26,7 +26,6 @@ public class PlayerMovement : MonoBehaviour
     private float _currentMoveSpeed;
     private float _slideCountdown = 0;
 
-
     private void Awake()
     {
         _input = new PlayerInput();

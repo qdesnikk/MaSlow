@@ -6,38 +6,22 @@ public class CoinsSpawner : MonoBehaviour
 {
     [SerializeField] private Coin _coin;
     [SerializeField] private Player _player;
+    [SerializeField] private int _coinsCountOnLevel;
 
-    private int _spawnCountdown;
-
-    private void Awake()
+    private void Start()
     {
-        StartCoroutine(SpawnCountdown());
+        Invoke("Spawn", Random.Range(5, 15));
     }
 
-    private void Update()
-    {
-        if (_spawnCountdown <= 0)
-        {
-            TrySpawn();
-            StartCoroutine(SpawnCountdown());
-        }
-    }
-
-    private void TrySpawn()
+    private void Spawn()
     {
         Instantiate(_coin, _player.transform.position + new Vector3(20, 0, 0), Quaternion.identity);
-    }
+        _coinsCountOnLevel--;
 
-    private IEnumerator SpawnCountdown()
-    {
-        _spawnCountdown = Random.Range(3, 15);
-
-        while (_spawnCountdown > 0)
+        if (_coinsCountOnLevel > 0)
         {
-            _spawnCountdown--;
-
-            yield return new WaitForSeconds(1f);
+            Invoke("Spawn", Random.Range(5, 15));
         }
-
     }
+
 }

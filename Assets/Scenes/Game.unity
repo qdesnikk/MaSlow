@@ -1098,6 +1098,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _coin: {fileID: 4399791471849599350, guid: ca09bd024bab12f44bdcf21829e8ee93, type: 3}
   _player: {fileID: 1777631140}
+  _coinsCountOnLevel: 6
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -6660,7 +6661,7 @@ ParticleSystem:
   ringBufferLoopRange: {x: 0, y: 1}
   looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   useRigidbodyForVelocity: 1
