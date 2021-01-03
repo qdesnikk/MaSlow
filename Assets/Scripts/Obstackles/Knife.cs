@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
-public class KnifeMovement : MonoBehaviour
+public class Knife : Obstackle
 {
     private void OnEnable()
     {

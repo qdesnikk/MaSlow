@@ -60,13 +60,19 @@ public class Player : MonoBehaviour
         {
             _coinsCount++;
             _coinsText.text = _coinsCount.ToString();
-            coin.Destroy();
+            coin.OnPickUp();
         }
         else if (collision.gameObject.TryGetComponent(out Obstackle obstackle))
         {
+            _animator.Play("Death");
+            IsDead?.Invoke();
+            Debug.Log(obstackle);
+        }
+        else if (collision.gameObject.TryGetComponent(out Knife knife))
+        {
             //_animator.Play("Death");
             //IsDead?.Invoke();
-            Debug.Log(obstackle);
+            //Debug.Log(obstackle);
         }
     }
 }

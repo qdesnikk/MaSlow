@@ -7,37 +7,34 @@ using UnityEngine.UI;
 
 public class LevelGenerator : MonoBehaviour
 {
-    [SerializeField] GridObject[] _bottomTemplates;
-    [SerializeField] GridObject[] _topTemplates;
-    [SerializeField] GridObject[] _obstacleTemplates;
-    [SerializeField] GridObject _startTemplate;
-    [SerializeField] GridObject _finishTemplate;
+    [SerializeField] private GridObject[] _bottomTemplates;
+    [SerializeField] private GridObject[] _topTemplates;
+    [SerializeField] private GridObject[] _obstacleTemplates;
+    [SerializeField] private GridObject _startTemplate;
+    [SerializeField] private GridObject _finishTemplate;
     [SerializeField] private Player _player;
-    [SerializeField] private Slider _progressBar;
     [SerializeField] private float _viewDistance;
     [SerializeField] private Vector2 _cellSize;
 
     private HashSet<Vector2Int> _collisionsMatrix = new HashSet<Vector2Int>();
     private bool _isStartCreated = false;
     private bool _isFinishCreated = false;
-    [SerializeField] private int _totalCountBetweenObstackles = 5;
-    [SerializeField] private int _currentCountBetweenObstackles = 0;
-    [SerializeField] private int _countObstacklesInLevel = 5;
-    [SerializeField] private int _levelLength;
+    private int _totalCountBetweenObstackles = 5;
+    private int _currentCountBetweenObstackles = 0;
+    private int _countObstacklesInLevel = 5;
+    private int _levelLength;
+
+    public int LevelLength => _levelLength;
 
     private void Awake()
     {
         _currentCountBetweenObstackles = _totalCountBetweenObstackles * 2;
-        _levelLength = _totalCountBetweenObstackles * _countObstacklesInLevel + _currentCountBetweenObstackles;
-
-        _progressBar.maxValue = _levelLength - (int)(_viewDistance / _cellSize.x * 2);
-        _progressBar.value = _progressBar.maxValue;
+        _levelLength = _totalCountBetweenObstackles * _countObstacklesInLevel;
     }
 
     private void Update()
     {
         FillDistance(_player.transform.position, _viewDistance);
-        _progressBar.value = Mathf.Lerp(_progressBar.value, _levelLength, 0.5f * Time.deltaTime);
     }
 
     private void FillDistance(Vector2 center, float viewDistance)
@@ -81,13 +78,13 @@ public class LevelGenerator : MonoBehaviour
 
         if (layer == GridLayer.KitchenFirstFloor)
         {
-            template = GetRandomKitchenFrstFloorTemplate();
+            template = GetRandomTemplate(_bottomTemplates);
             _currentCountBetweenObstackles--;
             _levelLength--;
         }
         else if (layer == GridLayer.KitchenSecondFloor)
         {
-            template = GetRandomKitchenSecondFloorTemplate();
+            template = GetRandomTemplate(_topTemplates);
         }
         else
         {
@@ -107,7 +104,7 @@ public class LevelGenerator : MonoBehaviour
 
         if ( _currentCountBetweenObstackles <= 0)
         {
-            obstackleTemplate = GetRandomObstacleTemplate();
+            obstackleTemplate = GetRandomTemplate(_obstacleTemplates);
             gridPosition.y = (int)obstackleTemplate.Layer;
             _currentCountBetweenObstackles = _totalCountBetweenObstackles;
             _countObstacklesInLevel--;
@@ -131,23 +128,13 @@ public class LevelGenerator : MonoBehaviour
         Instantiate(flagTemplate, position, Quaternion.identity, transform);
     }
 
-    private GridObject GetRandomObstacleTemplate()
+    private GridObject GetRandomTemplate(GridObject[] templates)
     {
-        return _obstacleTemplates[Random.Range(0, _obstacleTemplates.Length)];
-    }
+        var template = templates[Random.Range(0, templates.Length)];
 
-    private GridObject GetRandomKitchenFrstFloorTemplate()
-    {
-        return _bottomTemplates[Random.Range(0, _bottomTemplates.Length)];
-    }
-
-    private GridObject GetRandomKitchenSecondFloorTemplate()
-    {
-        int chance = Random.Range(0, 100);
-
-        if (chance >= 80)
-            return _topTemplates[Random.Range(0, _topTemplates.Length)];
-        else
+        if (template.GetChance())
+            return template;
+        else 
             return null;
     }
 

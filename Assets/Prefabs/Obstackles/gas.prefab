@@ -97,7 +97,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _layer: 50
-  _chance: 1
+  _chance: 100
 --- !u!114 &1753987248665056018
 MonoBehaviour:
   m_ObjectHideFlags: 0

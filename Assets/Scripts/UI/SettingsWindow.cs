@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Obstackle : MonoBehaviour
+public class SettingsWindow : Window
 {
     
 }

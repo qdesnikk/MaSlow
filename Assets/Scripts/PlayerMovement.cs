@@ -14,17 +14,25 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Transform _groundCheck;
     [SerializeField] private float _checkRadius;
     [SerializeField] private LayerMask _whatIsGround;
-    [SerializeField] private Image _whiteScreen;
     [SerializeField] private ParticleSystem _slideParticle;
-    [SerializeField] private Text _countDownText;
+    [SerializeField] private CountDown _countDown;
 
     private PlayerInput _input;
     private Rigidbody2D _rigidBody;
     private bool _isGrounded;
     private Animator _animator;
-    private int _startCountdown = 4;
-    private float _currentMoveSpeed;
     private float _slideCountdown = 0;
+    private bool _canMove = false;
+
+    private void OnEnable()
+    {
+        _countDown.StartLevel += AllowToMove;
+    }
+
+    private void OnDisable()
+    {
+        _countDown.StartLevel -= AllowToMove;
+    }
 
     private void Awake()
     {
@@ -33,26 +41,15 @@ public class PlayerMovement : MonoBehaviour
 
         _input.Player.Jump.performed += ctx => Jump();
         _input.Player.Slide.performed += ctx => Slide();
-        _input.Player.SlowMotion.performed += ctx => SlowMotion();
 
         _rigidBody = GetComponent<Rigidbody2D>();
         _animator = GetComponent<Animator>();
-
-        _currentMoveSpeed = 0;
-
-        _countDownText.gameObject.SetActive(false);
-        StartCoroutine(StartCountdownTimer());
     }
 
     private void Update()
     {
-        if (_startCountdown == 0)
-        {
-            _currentMoveSpeed = _moveSpeed;
-            _countDownText.gameObject.SetActive(false);
-        }
-
-        Move();
+        if(_canMove)
+            Move();
     }
 
     private void FixedUpdate()
@@ -62,7 +59,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Move()
     {
-        _rigidBody.transform.Translate(Vector3.right * _currentMoveSpeed * Time.deltaTime);
+        _rigidBody.transform.Translate(Vector3.right * _moveSpeed * Time.deltaTime);
     }
 
     private void Jump()
@@ -86,25 +83,9 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void SlowMotion()
+    private void AllowToMove()
     {
-        _whiteScreen.DOFade(0.6f, 0.1f);
-        _whiteScreen.DOFade(0f, 1f);
-
-        StartCoroutine(SlowMotionTimer());
-    }
-
-    private IEnumerator SlowMotionTimer()
-    {
-        Time.timeScale = 0.4f;
-
-        while (Time.timeScale < 1f)
-        {
-            Time.timeScale += 0.1f;
-            Time.fixedDeltaTime = 0.02F * Time.timeScale;
-
-            yield return new WaitForSeconds(0.2f);
-        }
+        _canMove = true;
     }
 
     private IEnumerator SlideCountdownTimer()
@@ -114,19 +95,6 @@ public class PlayerMovement : MonoBehaviour
         while (_slideCountdown > 0)
         {
             _slideCountdown--;
-
-            yield return new WaitForSeconds(1f);
-        }
-    }
-
-    private IEnumerator StartCountdownTimer()
-    {
-        
-        while (_startCountdown > 0)
-        {
-            _countDownText.gameObject.SetActive(true);
-            _startCountdown--;
-            _countDownText.text = _startCountdown.ToString();
 
             yield return new WaitForSeconds(1f);
         }

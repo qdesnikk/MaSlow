@@ -5,16 +5,14 @@ using DG.Tweening;
 
 public class Coin : MonoBehaviour
 {
-    [SerializeField] private ParticleSystem _coinUpEffect;
+    [SerializeField] private ParticleSystem _pickUpEffect;
+    [SerializeField] private ParticleSystem _shineEffect;
 
-    private void Update()
+    public void OnPickUp()
     {
-        //Destroy(this);
-    }
-
-    public void Destroy()
-    {
-        _coinUpEffect.Play();
+        _pickUpEffect.Play();
+        _shineEffect.gameObject.SetActive(false);
         this.transform.DOScale(Vector3.zero, 0.5f);
+        Destroy(this.gameObject, 1f);
     }
 }
