@@ -7,9 +7,12 @@ using DG.Tweening;
 
 public abstract class Window : MonoBehaviour
 {
+    [SerializeField] protected Image _windowBackground;
+
     public virtual void OpenWindow()
     {
         this.gameObject.SetActive(true);
+        _windowBackground.DOFade(0.5f, 1f).From(0).SetUpdate(true);
         this.transform.DOScale(1, 0.5f).From(0).SetUpdate(true);
         Time.timeScale = 0;
     }

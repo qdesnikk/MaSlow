@@ -18,17 +18,17 @@ public class Player : MonoBehaviour
     private Rigidbody2D _rigidBody;
     private int _coinsCount = 0;
 
-    public event UnityAction IsDead;
-    public event UnityAction LevelFinished;
+    public event UnityAction Died;
+    public event UnityAction Finished;
 
     private void OnEnable()
     {
-        this.LevelFinished += FinishTheLevel;
+        this.Finished += FinishTheLevel;
     }
 
     private void OnDisable()
     {
-        this.LevelFinished -= FinishTheLevel;
+        this.Finished -= FinishTheLevel;
     }
 
     private void Awake()
@@ -53,7 +53,7 @@ public class Player : MonoBehaviour
     {
         if (collision.gameObject.TryGetComponent(out Finish finish))
         {
-            LevelFinished?.Invoke();
+            Finished?.Invoke();
             Debug.Log("finish level");
         }
         else if (collision.gameObject.TryGetComponent(out Coin coin))
@@ -65,7 +65,7 @@ public class Player : MonoBehaviour
         else if (collision.gameObject.TryGetComponent(out Obstackle obstackle))
         {
             _animator.Play("Death");
-            IsDead?.Invoke();
+            Died?.Invoke();
             Debug.Log(obstackle);
         }
         else if (collision.gameObject.TryGetComponent(out Knife knife))

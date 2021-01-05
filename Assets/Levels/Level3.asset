@@ -13,10 +13,16 @@ MonoBehaviour:
   m_Name: Level3
   m_EditorClassIdentifier: 
   _background: {fileID: 0}
-  _kithen: []
+  _bottomTemplates:
+  - {fileID: 4355662279872997839, guid: 3425e354b7d22d445ae300af83fd7e61, type: 3}
+  - {fileID: 1190775975948848410, guid: 1acdb0086cee32242ab4f97cd62fe7e2, type: 3}
+  - {fileID: 4107995415908698609, guid: 4ad0b27df77e0d64093117247c65d2ee, type: 3}
+  - {fileID: -2599466862034023942, guid: 66d019efc13920440a9976d0375a2ff9, type: 3}
+  _topTemplates:
+  - {fileID: 8292701835980005981, guid: cabcfe95570c5ef4c8522a21f2733000, type: 3}
+  - {fileID: 8706257664588388300, guid: 709ead1e76049aa47a681987784f04e9, type: 3}
   _obstackles:
   - {fileID: 6829035131353611215, guid: 455d9ed62ac0fbd489386b52074b0d6c, type: 3}
   - {fileID: 6829035131353611215, guid: ed099cad20f42fc4c9a22ecfb86e2a16, type: 3}
   _obstacklesCount: 0
   _speed: 0
-  isOpen: 0

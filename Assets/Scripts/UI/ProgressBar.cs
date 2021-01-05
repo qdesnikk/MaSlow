@@ -7,15 +7,23 @@ using UnityEngine.UI;
 public class ProgressBar : MonoBehaviour
 {
     [SerializeField] private LevelGenerator _levelGenerator;
+    [SerializeField] private CountDown _countDown;
 
     private Slider _progressBar;
+
+    private void OnEnable()
+    {
+        _countDown.MoveStarted += GetMaxValue;
+    }
+
+    private void OnDisable()
+    {
+        _countDown.MoveStarted -= GetMaxValue;
+    }
 
     private void Start()
     {
         _progressBar = GetComponent<Slider>();
-
-        _progressBar.maxValue = _levelGenerator.LevelLength;
-        _progressBar.value = _progressBar.maxValue;
     }
 
     private void Update()
@@ -23,5 +31,9 @@ public class ProgressBar : MonoBehaviour
         _progressBar.value = Mathf.Lerp(_progressBar.value, _levelGenerator.LevelLength, 0.5f * Time.deltaTime);
     }
 
-
+    private void GetMaxValue()
+    {
+        _progressBar.maxValue = _levelGenerator.LevelLength;
+        _progressBar.value = _progressBar.maxValue;
+    }
 }

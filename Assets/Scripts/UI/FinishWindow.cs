@@ -6,9 +6,5 @@ using UnityEngine.SceneManagement;
 
 public class FinishWindow : Window
 {
-    public void NextLevel()
-    {
-
-    }
 
 }

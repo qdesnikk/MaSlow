@@ -7,13 +7,17 @@ using UnityEngine.UI;
 public class Level : ScriptableObject
 {
     [SerializeField] private Image _background;
-    [SerializeField] private List<GridObject> _kithen;
+    [SerializeField] private List<GridObject> _bottomTemplates;
+    [SerializeField] private List<GridObject> _topTemplates;
     [SerializeField] private List<GridObject> _obstackles;
     [SerializeField] private int _obstacklesCount;
     [SerializeField] private float _speed;
 
 
     public int ObstacklesCount => _obstacklesCount;
+
+    public List<GridObject> BottomTemplates => _bottomTemplates;
+    public List<GridObject> TopTemplates => _topTemplates;
     public List<GridObject> Obstackles => _obstackles;
 
 }

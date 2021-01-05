@@ -5,7 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class LevelsWindow : Window
 {
-
     public void TryLoadLevel(int level)
     {
         PlayerPrefs.SetInt("CurrentLevel", level);

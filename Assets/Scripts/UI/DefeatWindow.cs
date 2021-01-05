@@ -10,12 +10,12 @@ public class DefeatWindow : Window
     
     private void OnEnable()
     {
-        _player.IsDead += OpenWindow;
+        _player.Died += OpenWindow;
     }
 
     private void OnDisable()
     {
-        _player.IsDead -= OpenWindow;
+        _player.Died -= OpenWindow;
     }
 
 }

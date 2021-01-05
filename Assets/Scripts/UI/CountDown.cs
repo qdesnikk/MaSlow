@@ -11,7 +11,7 @@ public class CountDown : MonoBehaviour
     private int _currentCount = 3;
     private Text _countDownText;
 
-    public event UnityAction LevelStarted;
+    public event UnityAction MoveStarted;
 
     private void Awake()
     {
@@ -24,7 +24,7 @@ public class CountDown : MonoBehaviour
     {
         if (_currentCount < 1)
         {
-            LevelStarted?.Invoke();
+            MoveStarted?.Invoke();
             _countDownText.gameObject.SetActive(false);
         }
     }

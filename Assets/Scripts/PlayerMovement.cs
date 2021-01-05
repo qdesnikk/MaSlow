@@ -26,12 +26,12 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnEnable()
     {
-        _countDown.LevelStarted += AllowToMove;
+        _countDown.MoveStarted += AllowToMove;
     }
 
     private void OnDisable()
     {
-        _countDown.LevelStarted -= AllowToMove;
+        _countDown.MoveStarted -= AllowToMove;
     }
 
     private void Awake()
@@ -64,7 +64,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Jump()
     {
-        if (_isGrounded)
+        if (_isGrounded && _canMove)
         {
             _animator.Play("Jump");
             _rigidBody.AddForce(Vector2.up * _jumpForce, ForceMode2D.Impulse);
@@ -73,7 +73,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Slide()
     {
-        if (_isGrounded && _slideCountdown <= 0)
+        if (_isGrounded && _canMove && _slideCountdown <= 0)
         {
             _slideParticle.Play();
             _animator.Play("Slide");
@@ -86,17 +86,19 @@ public class PlayerMovement : MonoBehaviour
     private void AllowToMove()
     {
         _canMove = true;
+        _animator.Play("Run");
     }
 
     private IEnumerator SlideCountdownTimer()
     {
         _slideCountdown = 5;
+        WaitForSeconds waitTime = new WaitForSeconds(1f);
 
         while (_slideCountdown > 0)
         {
             _slideCountdown--;
 
-            yield return new WaitForSeconds(1f);
+            yield return waitTime;
         }
     }
 }

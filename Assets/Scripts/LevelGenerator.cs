@@ -4,24 +4,23 @@ using UnityEngine;
 using System.Linq;
 using UnityEngine.Events;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class LevelGenerator : MonoBehaviour
 {
     [SerializeField] private LevelChanger _levelChanger;
-
-
-
-
-    [SerializeField] private List<GridObject> _bottomTemplates;
-    [SerializeField] private List<GridObject> _topTemplates;
-    private List<GridObject> _obstacleTemplates = new List<GridObject>();
     [SerializeField] private GridObject _startTemplate;
     [SerializeField] private GridObject _finishTemplate;
+    [SerializeField] private Image _startSplash;
     [SerializeField] private Player _player;
     [SerializeField] private float _viewDistance;
     [SerializeField] private Vector2 _cellSize;
 
+    private List<GridObject> _bottomTemplates;
+    private List<GridObject> _topTemplates;
+    private List<GridObject> _obstacleTemplates = new List<GridObject>();
     private HashSet<Vector2Int> _collisionsMatrix = new HashSet<Vector2Int>();
+
     private bool _isStartCreated = false;
     private bool _isFinishCreated = false;
     private int _totalCountBetweenObstackles = 5;
@@ -31,8 +30,15 @@ public class LevelGenerator : MonoBehaviour
 
     public int LevelLength => _levelLength;
 
+    private void Awake()
+    {
+        _startSplash.DOFade(0f, 1f).From(0.3f).SetUpdate(true);
+    }
+
     private void Start()
     {
+        _bottomTemplates = FillTemplatesList(_levelChanger.BottomTemplates);
+        _topTemplates = FillTemplatesList(_levelChanger.TopTemplates);
         _obstacleTemplates = FillTemplatesList(_levelChanger.Obstackles);
 
         _currentCountBetweenObstackles = _totalCountBetweenObstackles * 2;
