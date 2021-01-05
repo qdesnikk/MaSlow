@@ -1,4 +1,4 @@
-﻿enum GridLayer
+﻿public enum GridLayer
 {
     KitchenFirstFloor = 0,
     KitchenSecondFloor = 120,

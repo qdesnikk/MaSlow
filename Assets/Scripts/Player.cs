@@ -19,16 +19,16 @@ public class Player : MonoBehaviour
     private int _coinsCount = 0;
 
     public event UnityAction IsDead;
-    public event UnityAction IsFinished;
+    public event UnityAction LevelFinished;
 
     private void OnEnable()
     {
-        this.IsFinished += FinishTheLevel;
+        this.LevelFinished += FinishTheLevel;
     }
 
     private void OnDisable()
     {
-        this.IsFinished -= FinishTheLevel;
+        this.LevelFinished -= FinishTheLevel;
     }
 
     private void Awake()
@@ -53,7 +53,7 @@ public class Player : MonoBehaviour
     {
         if (collision.gameObject.TryGetComponent(out Finish finish))
         {
-            IsFinished?.Invoke();
+            LevelFinished?.Invoke();
             Debug.Log("finish level");
         }
         else if (collision.gameObject.TryGetComponent(out Coin coin))

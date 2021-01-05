@@ -10,13 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b326f3e8d046457418c018654e03c9d7, type: 3}
-  m_Name: Level1
+  m_Name: Level4
   m_EditorClassIdentifier: 
   _background: {fileID: 0}
   _kithen: []
   _obstackles:
-  - {fileID: 6829035131353611215, guid: daefcf08518df6941b415b12b7f97415, type: 3}
-  - {fileID: 6829035131353611215, guid: a0373adb1eef61840bb3b6baa9a6033c, type: 3}
+  - {fileID: 5743974512760693665, guid: 4fb735d8d6aaa4749b285a0aab06e1b6, type: 3}
+  - {fileID: 6829035131353611215, guid: 20ad5394f7c445d428b5d7f0008e842a, type: 3}
   _obstacklesCount: 0
   _speed: 0
-  isOpen: 0

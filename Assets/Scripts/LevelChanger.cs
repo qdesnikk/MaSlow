@@ -6,16 +6,18 @@ public class LevelChanger : MonoBehaviour
 {
     [SerializeField] private List<Level> _levels;
 
-    private List<Obstackle> _obstackles = new List<Obstackle>();
-    private int _current = 0;
+    private List<GridObject> _obstackles = new List<GridObject>();
+    private int _currentLevel = 0;
+
+    public List<GridObject> Obstackles => _obstackles;
 
     private void Awake()
     {
-        for (int i = 0; i < _levels[_current].Obstackles.Count; i++)
+        _currentLevel = PlayerPrefs.GetInt("CurrentLevel");
+
+        for (int i = 0; i < _levels[_currentLevel - 1].Obstackles.Count; i++)
         {
-            _obstackles.Add(_levels[_current].Obstackles[i]);
+            _obstackles.Add(_levels[_currentLevel - 1].Obstackles[i]);
         }
     }
-
-
 }

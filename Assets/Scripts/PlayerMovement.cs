@@ -26,12 +26,12 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnEnable()
     {
-        _countDown.StartLevel += AllowToMove;
+        _countDown.LevelStarted += AllowToMove;
     }
 
     private void OnDisable()
     {
-        _countDown.StartLevel -= AllowToMove;
+        _countDown.LevelStarted -= AllowToMove;
     }
 
     private void Awake()

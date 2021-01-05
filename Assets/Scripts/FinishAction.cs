@@ -10,12 +10,12 @@ public class FinishAction : MonoBehaviour
 
     private void OnEnable()
     {
-        _player.IsFinished += ShowCongratulations;
+        _player.LevelFinished += ShowCongratulations;
     }
 
     private void OnDisable()
     {
-        _player.IsFinished -= ShowCongratulations;
+        _player.LevelFinished -= ShowCongratulations;
     }
 
     private void ShowCongratulations()

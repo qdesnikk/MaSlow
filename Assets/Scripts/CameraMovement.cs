@@ -21,14 +21,14 @@ public class CameraMovement : MonoBehaviour
 
     private void OnEnable()
     {
-        _player.IsFinished += FocusOnFinish;
-        _countDown.StartLevel += CheckForStart;
+        _player.LevelFinished += FocusOnFinish;
+        _countDown.LevelStarted += CheckForStart;
     }
 
     private void OnDisable()
     {
-        _player.IsFinished -= FocusOnFinish;
-        _countDown.StartLevel -= CheckForStart;
+        _player.LevelFinished -= FocusOnFinish;
+        _countDown.LevelStarted -= CheckForStart;
     }
 
     private void Start()

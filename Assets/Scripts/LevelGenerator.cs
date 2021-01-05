@@ -7,9 +7,14 @@ using UnityEngine.UI;
 
 public class LevelGenerator : MonoBehaviour
 {
-    [SerializeField] private GridObject[] _bottomTemplates;
-    [SerializeField] private GridObject[] _topTemplates;
-    [SerializeField] private GridObject[] _obstacleTemplates;
+    [SerializeField] private LevelChanger _levelChanger;
+
+
+
+
+    [SerializeField] private List<GridObject> _bottomTemplates;
+    [SerializeField] private List<GridObject> _topTemplates;
+    private List<GridObject> _obstacleTemplates = new List<GridObject>();
     [SerializeField] private GridObject _startTemplate;
     [SerializeField] private GridObject _finishTemplate;
     [SerializeField] private Player _player;
@@ -26,8 +31,10 @@ public class LevelGenerator : MonoBehaviour
 
     public int LevelLength => _levelLength;
 
-    private void Awake()
+    private void Start()
     {
+        _obstacleTemplates = FillTemplatesList(_levelChanger.Obstackles);
+
         _currentCountBetweenObstackles = _totalCountBetweenObstackles * 2;
         _levelLength = _totalCountBetweenObstackles * _countObstacklesInLevel;
     }
@@ -128,9 +135,9 @@ public class LevelGenerator : MonoBehaviour
         Instantiate(flagTemplate, position, Quaternion.identity, transform);
     }
 
-    private GridObject GetRandomTemplate(GridObject[] templates)
+    private GridObject GetRandomTemplate(List<GridObject> templates)
     {
-        var template = templates[Random.Range(0, templates.Length)];
+        var template = templates[Random.Range(0, templates.Count)];
 
         if (template.GetChance())
             return template;
@@ -150,5 +157,17 @@ public class LevelGenerator : MonoBehaviour
         return new Vector2Int(
             (int)(worldPosition.x / _cellSize.x),
             (int)(worldPosition.y / _cellSize.y));
+    }
+
+    private List<GridObject> FillTemplatesList(List<GridObject> inputTemplates)
+    {
+        List<GridObject> tempTemplates = new List<GridObject>();
+
+        for (int i = 0; i < inputTemplates.Count; i++)
+        {
+            tempTemplates.Add(inputTemplates[i]);
+        }
+
+        return tempTemplates;
     }
 }
