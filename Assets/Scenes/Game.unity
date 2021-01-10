@@ -6130,7 +6130,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb4503ca7cc1e324ebae37cf23321d19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _windowBackground: {fileID: 1349593684}
+  WindowBackground: {fileID: 0}
   _player: {fileID: 1777631140}
 --- !u!114 &659809629
 MonoBehaviour:
@@ -6296,7 +6296,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d60b1c74432a9a148b5648dc4aad4f3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _windowBackground: {fileID: 1349593684}
+  WindowBackground: {fileID: 1349593684}
 --- !u!114 &693433338
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6447,7 +6447,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1970597537}
-        m_MethodName: NextLevel
+        m_MethodName: OpenNextLevel
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -17362,7 +17362,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24e562bedff12684bafd07fe42a03890, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _windowBackground: {fileID: 1349593684}
+  WindowBackground: {fileID: 0}
 --- !u!114 &1590898496
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18080,6 +18080,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 366c86ce1a644fa42887cc3810013817, type: 2}
   - {fileID: 11400000, guid: 4f72fed2cb6cdbe4eaebf464a231f424, type: 2}
   - {fileID: 11400000, guid: 1917892e01734404d94ca9fc6dcebeda, type: 2}
+  - {fileID: 11400000, guid: bc173e1dd3ac7d8499470e4e95fb9ccd, type: 2}
+  - {fileID: 11400000, guid: 7b67367dad0f44c45959fadb5b67ee72, type: 2}
 --- !u!1 &2000217564
 GameObject:
   m_ObjectHideFlags: 0

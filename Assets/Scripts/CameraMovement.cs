@@ -18,7 +18,6 @@ public class CameraMovement : MonoBehaviour
     private bool isStarted = false;
     private bool isFinished = false;
 
-
     private void OnEnable()
     {
         _player.Finished += FocusOnFinish;
@@ -79,7 +78,7 @@ public class CameraMovement : MonoBehaviour
         _camera.DOOrthoSize(_camera.orthographicSize - 1, 1f);
     }
 
-    enum Direction
+    private enum Direction
     {
         Left = -1,
         Right = 1

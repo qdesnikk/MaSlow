@@ -13,9 +13,17 @@ MonoBehaviour:
   m_Name: Level4
   m_EditorClassIdentifier: 
   _background: {fileID: 0}
-  _kithen: []
+  _bottomTemplates:
+  - {fileID: 4355662279872997839, guid: d15edc5a40c8e974dbc937c798068e29, type: 3}
+  - {fileID: 1190775975948848410, guid: 7d2b47184d590bf4a82e9c908eeddcff, type: 3}
+  - {fileID: 4107995415908698609, guid: 3c99b3f38af17c0438571d9476785b1e, type: 3}
+  - {fileID: -2599466862034023942, guid: 9bc985ec9c4d35c49a86d17433aa49cf, type: 3}
+  _topTemplates:
+  - {fileID: 8292701835980005981, guid: 4129bad95b842004c9bf462ac845ef66, type: 3}
+  - {fileID: 8706257664588388300, guid: 4bb8bf7be543a404abd852784a383479, type: 3}
   _obstackles:
   - {fileID: 5743974512760693665, guid: 4fb735d8d6aaa4749b285a0aab06e1b6, type: 3}
   - {fileID: 6829035131353611215, guid: 20ad5394f7c445d428b5d7f0008e842a, type: 3}
   _obstacklesCount: 0
   _speed: 0
+  _number: 4

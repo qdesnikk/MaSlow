@@ -10,7 +10,7 @@ public class LevelChanger : MonoBehaviour
     private List<GridObject> _bottomTemplates = new List<GridObject>();
     private List<GridObject> _topTemplates = new List<GridObject>();
     private List<GridObject> _obstackles = new List<GridObject>();
-    private int _currentLevel = 0;
+    private int _currentLevel;
 
     public List<GridObject> BottomTemplates => _bottomTemplates;
     public List<GridObject> TopTemplates => _topTemplates;
@@ -37,14 +37,28 @@ public class LevelChanger : MonoBehaviour
         return tempTemplates;
     }
 
-    public void NextLevel()
+    public void OpenNextLevel()
     {
         if (_levels.Count >= _currentLevel + 1)
         {
             _currentLevel++;
             PlayerPrefs.SetInt("CurrentLevel", _currentLevel);
+
+            TryUnlockNextLevel();
+
             SceneManager.LoadScene("Game", LoadSceneMode.Single);
             Time.timeScale = 1;
+        }
+    }
+
+    private void TryUnlockNextLevel()
+    {
+        int totalCountUnlockedLevels = PlayerPrefs.GetInt("TotalCountUnlockedLevels");
+
+        if (totalCountUnlockedLevels < _currentLevel)
+        {
+            totalCountUnlockedLevels++;
+            PlayerPrefs.SetInt("TotalCountUnlockedLevels", totalCountUnlockedLevels);
         }
     }
 }

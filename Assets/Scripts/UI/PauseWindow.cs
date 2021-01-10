@@ -9,7 +9,7 @@ public class PauseWindow : Window
 {
     public void ResumeGame()
     {
-        _windowBackground.DOFade(0f, 0.5f).SetUpdate(true);
+        WindowBackground.DOFade(0f, 0.5f).SetUpdate(true);
         Time.timeScale = 1;
         this.gameObject.SetActive(false);
     }

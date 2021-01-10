@@ -8,18 +8,9 @@ public class Coin : MonoBehaviour
     [SerializeField] private ParticleSystem _pickUpEffect;
     [SerializeField] private ParticleSystem _shineEffect;
 
-
     private void Start()
     {
         Move();
-    }
-
-    public void OnPickUp()
-    {
-        _pickUpEffect.Play();
-        _shineEffect.gameObject.SetActive(false);
-        this.transform.DOScale(Vector3.zero, 0.5f);
-        Destroy(this.gameObject, 1f);
     }
 
     private void Move()
@@ -32,4 +23,11 @@ public class Coin : MonoBehaviour
         //this.transform.DOShakePosition(20f, 1f, 3);
     }
 
+    public void PickUp()
+    {
+        _pickUpEffect.Play();
+        _shineEffect.gameObject.SetActive(false);
+        this.transform.DOScale(Vector3.zero, 0.5f);
+        Destroy(this.gameObject, 1f);
+    }
 }

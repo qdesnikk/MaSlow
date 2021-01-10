@@ -26,3 +26,4 @@ MonoBehaviour:
   - {fileID: 6829035131353611215, guid: 843b2d5c98c4eac4b9496efc65073694, type: 3}
   _obstacklesCount: 0
   _speed: 0
+  _number: 2

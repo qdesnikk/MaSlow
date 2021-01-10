@@ -2,12 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 using DG.Tweening;
 
 public class MainMenu : MonoBehaviour
 {
     [SerializeField] private Image _windowBackground;
+    [SerializeField] private Text _countCoins;
+
+    private void Start()
+    {
+        _countCoins.text = PlayerPrefs.GetInt("CountCoins").ToString();
+    }
 
     public void OpenWindow(Window window)
     {

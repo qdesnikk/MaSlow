@@ -46,7 +46,6 @@ public class Player : MonoBehaviour
         float jumpForce = 15;
         _rigidBody.AddForce(new Vector2(1f, 0.7f) * jumpForce, ForceMode2D.Impulse);
         _transform.DORotate(new Vector3(0, 0, 360), 1f, RotateMode.FastBeyond360);
-
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -60,19 +59,14 @@ public class Player : MonoBehaviour
         {
             _coinsCount++;
             _coinsText.text = _coinsCount.ToString();
-            coin.OnPickUp();
+            PlayerPrefs.SetInt("CoinsCount", _coinsCount);
+            coin.PickUp();
         }
         else if (collision.gameObject.TryGetComponent(out Obstackle obstackle))
         {
             _animator.Play("Death");
             Died?.Invoke();
             Debug.Log(obstackle);
-        }
-        else if (collision.gameObject.TryGetComponent(out Knife knife))
-        {
-            //_animator.Play("Death");
-            //IsDead?.Invoke();
-            //Debug.Log(obstackle);
         }
     }
 }

@@ -7,12 +7,12 @@ using DG.Tweening;
 
 public abstract class Window : MonoBehaviour
 {
-    [SerializeField] protected Image _windowBackground;
+    [SerializeField] protected Image WindowBackground;
 
     public virtual void OpenWindow()
     {
         this.gameObject.SetActive(true);
-        _windowBackground.DOFade(0.5f, 1f).From(0).SetUpdate(true);
+        WindowBackground.DOFade(0.5f, 1f).From(0).SetUpdate(true);
         this.transform.DOScale(1, 0.5f).From(0).SetUpdate(true);
         Time.timeScale = 0;
     }
@@ -29,5 +29,4 @@ public abstract class Window : MonoBehaviour
         Time.timeScale = 1;
         SceneManager.LoadScene("Game", LoadSceneMode.Single);
     }
-
 }

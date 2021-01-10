@@ -17,5 +17,4 @@ public class DefeatWindow : Window
     {
         _player.Died -= OpenWindow;
     }
-
 }

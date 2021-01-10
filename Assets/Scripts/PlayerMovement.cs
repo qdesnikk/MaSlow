@@ -19,8 +19,8 @@ public class PlayerMovement : MonoBehaviour
 
     private PlayerInput _input;
     private Rigidbody2D _rigidBody;
-    private bool _isGrounded;
     private Animator _animator;
+    private bool _isGrounded;
     private float _slideCountdown = 0;
     private bool _canMove = false;
 
