@@ -7,7 +7,7 @@ public class LevelsWindow : Window
 {
     [SerializeField] private List<LevelButton> _levelButtons;
 
-    private int _totalCountUnlockedLevels;
+    private int _totalCountUnlockedLevels = 1;
 
     private void Awake()
     {
@@ -19,7 +19,6 @@ public class LevelsWindow : Window
     private void Start()
     {
         _totalCountUnlockedLevels = PlayerPrefs.GetInt("TotalCountUnlockedLevels");
-        Debug.Log(_totalCountUnlockedLevels);
 
         for (int i = 0; i < _totalCountUnlockedLevels; i++)
         {

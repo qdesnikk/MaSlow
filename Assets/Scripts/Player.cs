@@ -10,16 +10,15 @@ using UnityEngine.Events;
 [RequireComponent(typeof(Rigidbody2D))]
 public class Player : MonoBehaviour
 {
-    [SerializeField] private Text _coinsText;
     [SerializeField] private LevelGenerator _levelGenerator;
 
     private Transform _transform;
     private Animator _animator;
     private Rigidbody2D _rigidBody;
-    private int _coinsCount = 0;
 
     public event UnityAction Died;
     public event UnityAction Finished;
+    public event UnityAction CoinCollecting;
 
     private void OnEnable()
     {
@@ -38,7 +37,6 @@ public class Player : MonoBehaviour
         _animator = GetComponent<Animator>();
         _rigidBody = GetComponent<Rigidbody2D>();
 
-        _coinsText.text = _coinsCount.ToString();
     }
 
     private void FinishTheLevel()
@@ -57,9 +55,7 @@ public class Player : MonoBehaviour
         }
         else if (collision.gameObject.TryGetComponent(out Coin coin))
         {
-            _coinsCount++;
-            _coinsText.text = _coinsCount.ToString();
-            PlayerPrefs.SetInt("CoinsCount", _coinsCount);
+            CoinCollecting?.Invoke();
             coin.PickUp();
         }
         else if (collision.gameObject.TryGetComponent(out Obstackle obstackle))

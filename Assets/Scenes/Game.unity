@@ -16233,7 +16233,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1194503291
 GameObject:
@@ -17101,6 +17101,51 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1445477688}
   m_CullTransparentMesh: 0
+--- !u!1 &1457204434
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1457204436}
+  - component: {fileID: 1457204435}
+  m_Layer: 0
+  m_Name: CoinsCounter
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1457204435
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1457204434}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c43e58882bef4345b1f646ebc668a53, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _coinsText: {fileID: 1419406385}
+  _player: {fileID: 1777631140}
+--- !u!4 &1457204436
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1457204434}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 969.1959, y: 411.8043, z: -3236.75}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1490301982
 GameObject:
   m_ObjectHideFlags: 0
@@ -17362,7 +17407,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24e562bedff12684bafd07fe42a03890, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  WindowBackground: {fileID: 0}
+  WindowBackground: {fileID: 1349593684}
 --- !u!114 &1590898496
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17721,7 +17766,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1777631134
 GameObject:
@@ -17904,7 +17949,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c528e71affa209944a7bcab48a797ffa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _coinsText: {fileID: 1419406385}
   _levelGenerator: {fileID: 532722173}
 --- !u!95 &1777631141
 Animator:
@@ -18259,7 +18303,7 @@ RectTransform:
   - {fileID: 209406737}
   - {fileID: 693433336}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}

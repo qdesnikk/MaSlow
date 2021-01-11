@@ -28,6 +28,6 @@ public class Coin : MonoBehaviour
         _pickUpEffect.Play();
         _shineEffect.gameObject.SetActive(false);
         this.transform.DOScale(Vector3.zero, 0.5f);
-        Destroy(this.gameObject, 1f);
+        Destroy(this.gameObject, 2f);
     }
 }

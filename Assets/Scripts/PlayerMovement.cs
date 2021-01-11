@@ -32,6 +32,7 @@ public class PlayerMovement : MonoBehaviour
     private void OnDisable()
     {
         _countDown.MoveStarted -= AllowToMove;
+        _input.Disable();
     }
 
     private void Awake()

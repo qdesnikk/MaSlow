@@ -7,11 +7,11 @@ using DG.Tweening;
 public class MainMenu : MonoBehaviour
 {
     [SerializeField] private Image _windowBackground;
-    [SerializeField] private Text _countCoins;
+    [SerializeField] private Text _coinsCount;
 
     private void Start()
     {
-        _countCoins.text = PlayerPrefs.GetInt("CountCoins").ToString();
+        _coinsCount.text = PlayerPrefs.GetInt("CoinsCount").ToString();
     }
 
     public void OpenWindow(Window window)
