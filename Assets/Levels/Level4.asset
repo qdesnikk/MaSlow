@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b326f3e8d046457418c018654e03c9d7, type: 3}
   m_Name: Level4
   m_EditorClassIdentifier: 
-  _background: {fileID: 0}
+  _number: 4
+  _background: {fileID: 4553297991636653715, guid: 49e8927ac0c986844b5adb1254817734,
+    type: 3}
   _bottomTemplates:
   - {fileID: 4355662279872997839, guid: d15edc5a40c8e974dbc937c798068e29, type: 3}
   - {fileID: 1190775975948848410, guid: 7d2b47184d590bf4a82e9c908eeddcff, type: 3}
@@ -24,6 +26,3 @@ MonoBehaviour:
   _obstackles:
   - {fileID: 5743974512760693665, guid: 4fb735d8d6aaa4749b285a0aab06e1b6, type: 3}
   - {fileID: 6829035131353611215, guid: 20ad5394f7c445d428b5d7f0008e842a, type: 3}
-  _obstacklesCount: 0
-  _speed: 0
-  _number: 4

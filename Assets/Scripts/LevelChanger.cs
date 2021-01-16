@@ -61,4 +61,9 @@ public class LevelChanger : MonoBehaviour
             PlayerPrefs.SetInt("TotalCountUnlockedLevels", totalCountUnlockedLevels);
         }
     }
+
+    public Level GetCurrentLevel()
+    {
+        return _levels[_currentLevel - 1];
+    }
 }

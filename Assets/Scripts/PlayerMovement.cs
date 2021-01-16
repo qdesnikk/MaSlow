@@ -77,7 +77,7 @@ public class PlayerMovement : MonoBehaviour
         if (_isGrounded && _canMove && _slideCountdown <= 0)
         {
             _slideParticle.Play();
-            _animator.Play("Slide");
+            _animator.Play("Slide-start");
             _rigidBody.AddForce(Vector2.right * _slideForce, ForceMode2D.Impulse);
 
             StartCoroutine(SlideCountdownTimer());
